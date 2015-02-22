@@ -2,16 +2,21 @@
 layout: default
 ---
 
-<div class="home">
-    {% for post in site.posts %}
-    <h2><a href="{{ post.url }}">{{ post.title }}</a></h1>
-    <p class="author">
-      <span class="date">{{ post.date | date: "%d %B %Y" }}</span>
-    </p>
-    <div class="content">
-      {{ post.content }}
-    </div>
-    {% endfor %}
+<div class="posts">
+  {% for post in site.posts %}
+    {% unless post.draft %}
+    <article class="post">    
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+      <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
+
+      <div class="entry">
+        {{ post.content | split:"<!--more-->" | first }}
+      </div>
+      
+      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+    </article>
+    {% endunless %}
+  {% endfor %}
 </div>
+
