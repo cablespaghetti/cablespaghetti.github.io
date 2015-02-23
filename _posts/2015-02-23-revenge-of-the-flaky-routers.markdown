@@ -6,7 +6,7 @@ tags: scripts linux networking
 ---
 There is an DSL router at work which I'm sure is sentient. It's 100% reliable for months on end and then once in a while, always when I'm out of the office, it decides to crash and drop the Internet connection. The only solution is of course to turn it off and on again; which means visiting the office at the most inconvenient times possible.
 
-I would spend some money from the IT budget to get it replaced; but with us moving to a leased line in the near future and it only failing every few months; it's really not worth it. Being a sysadmin, the natural solution was to write a shell script.
+I would spend some money from the IT budget to get it replaced but with us moving to a leased line in the near future and it only failing every few months, it's really not worth it. Being a sysadmin, the natural solution was to write a shell script.
 
 **Disclaimer: I am not a shell script guru. I take no responsibility for any exploding routers or other hilarious events that may transpire as a result of the use of these scripts.**
 
