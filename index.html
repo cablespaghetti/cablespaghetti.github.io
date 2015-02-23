@@ -6,15 +6,9 @@ layout: default
   {% for post in site.posts %}
     {% unless post.draft %}
     <article class="post">    
-
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-      <p class="post-meta">{{ post.date | date: "%d %B %Y" }}</p>
-
-      <div class="entry">
-        {{ post.content | split:"<!--more-->" | first }}
-      </div>
-      
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+    <a href="{{ post.url }}">{{ post.title }}</a><br/>
+    <span class="post-meta">{{ post.date | date: "%d %B %Y" }}</span>
+    {{ post.excerpt }}
     </article>
     {% endunless %}
   {% endfor %}
