@@ -1,8 +1,6 @@
 # Site settings
 title: Sam's brain dump
-description: > # this means to ignore newlines until "baseurl:"
-  A collection of scripts, tidbits and revelations that I feel the need to 
-  share with the world.
+description: A collection of scripts, tidbits and revelations that I feel the need to share with the world.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://cablespaghetti.github.io" # the base hostname & protocol for your site
 twitter_username: followthesam

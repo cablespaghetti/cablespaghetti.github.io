@@ -1,16 +1,14 @@
 ---
 layout: default
 ---
-
 <div class="posts">
   {% for post in site.posts %}
     {% unless post.draft %}
     <article class="post">    
-    <span class="post-link"><a href="{{ post.url }}">{{ post.title }}</a></span>
+    <h3 class="post-link"><a href="{{ post.url }}">{{ post.title }}</a></h3>
     <span class="post-meta">{{ post.date | date: "%d %B %Y" }}</span>
     {{ post.excerpt }}
     </article>
     {% endunless %}
   {% endfor %}
 </div>
-
