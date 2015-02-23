@@ -12,8 +12,8 @@
 
 .site-title {
     font-size: 26px;
-    line-height: 56px;
-    letter-spacing: -1px;
+    line-height: 48px;
+    font-weight: bold;
     margin-bottom: 0;
     float: left;
 
@@ -21,7 +21,14 @@
     &:visited {
         color: $grey-color-dark;
     }
+
 }
+
+.site-description {
+    font-size: 12px;
+    float: left;
+}
+
 
 .site-nav {
     float: right;
