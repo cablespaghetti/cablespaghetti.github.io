@@ -20,7 +20,6 @@ body {
     font-weight: 300;
     color: $text-color;
     background-color: $background-color;
-    -webkit-text-size-adjust: 100%;
 }
 
 
@@ -154,8 +153,7 @@ pre {
  * Wrapper
  */
 .wrapper {
-    max-width: -webkit-calc(800px - #{$spacing-unit*2});
-    max-width:         calc(800px - #{$spacing-unit*2});
+    max-width: #{(800-($spacing-unit*2))};
     margin-right: auto;
     margin-left: auto;
     padding-right: $spacing-unit;
@@ -163,10 +161,9 @@ pre {
     @extend %clearfix;
 
     @include media-query($on-laptop) {
-        max-width: -webkit-calc(800px - #{$spacing-unit});
-        max-width:         calc(800px - #{$spacing-unit});
-        padding-right: $spacing-unit / 2;
-        padding-left: $spacing-unit / 2;
+        max-width: #{(800-$spacing-unit)};
+        padding-right: #{$spacing-unit/2};
+        padding-left: #{$spacing-unit/2};
     }
 }
 
@@ -196,9 +193,5 @@ pre {
         width: 16px;
         height: 16px;
         vertical-align: middle;
-
-        path {
-            fill: $grey-color;
-        }
     }
 }
