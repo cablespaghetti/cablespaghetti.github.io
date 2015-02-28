@@ -8,6 +8,10 @@ layout: default
     <h3 class="post-link"><a href="{{ post.url }}">{{ post.title }}</a></h3>
     <span class="post-meta">{{ post.date | date: "%d %B %Y" }}</span>
     {{ post.excerpt }}
+    <p><a href="{{ post.url }}">Read more</a></p>
+    {% unless post == site.posts.last %}
+    <br /><hr style="background-color: #e8e8e8; height: 1px; border-top-style: none; border-bottom-style: none; border-left-style: none; border-right-style: none;"/><br />
+    {% endunless %}
     </article>
     {% endunless %}
   {% endfor %}
