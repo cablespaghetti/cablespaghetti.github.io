@@ -6,7 +6,7 @@ tags: encryption
 ---
 A few months ago I was tasked with encrypting the laptops of a few of our consultants who travel a fair bit. I was going to go with Microsoft BitLocker, but as we use Windows 7 Professional we're out of luck. I also looked at using TrueCrypt, but there are a lot of question marks around it since it was [abandoned by its developers](http://truecrypt.sourceforge.net/) and its successor [VeraCrypt](https://veracrypt.codeplex.com/) wasn't around at the time I was looking. There are also a lot of enterprise paid options, but for our usage the free options are perfectly fit for purpose.
 
-DiskCryptor is very easy to set up on an existing Windows installation, and because it uses the hardware AES encryption support built into most modern processors there is no perceivable affect on system performance. However I did find that the documentation, especially around the forgotten password reset process, was a bit lacking. So here is the documentation I wrote for our internal wiki (with some small changes), which covers the encryption process and what to do if you/one of your users forgets their password.
+DiskCryptor is very easy to set up on an existing Windows installation, and because it uses the hardware AES encryption support built into most modern processors there is no perceivable effect on system performance. However I did find that the documentation, especially around the forgotten password reset process, was a bit lacking. So here is the documentation I wrote for our internal wiki (with some small changes), which covers the encryption process and what to do if you/one of your users forgets their password.
 
 **Table of Contents**
 
