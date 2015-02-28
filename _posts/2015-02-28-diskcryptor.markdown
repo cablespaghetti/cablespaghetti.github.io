@@ -8,7 +8,13 @@ A few months ago I was tasked with encrypting the laptops of a few of our consul
 
 DiskCryptor is very easy to set up on an existing Windows installation, and because it uses the hardware AES encryption support built into most modern processors there is no perceivable affect on system performance. However I did find that the documentation, especially around the forgotten password reset process, was a bit lacking. So here is the documentation I wrote for our internal wiki (with some small changes), which covers the encryption process and what to do if you/one of your users forgets their password.
 
-**Encrypting a laptop**
+**Table of Contents**
+
+* [Encrypting a machine](#encrypting-a-machine)  
+* [Recovery Process when the password has been lost](#recovery-process-when-the-password-has-been-lost)
+* [Changing the password after initial encryption](#changing-the-password-after-initial-encryption)
+
+# **Encrypting a machine**
 
 1. Go to [the DiskCryptor website](http://diskcryptor.net) and get the latest DiskCryptor installer (we used 1.1.846.118), then reboot the machine when prompted.
 2. After you have rebooted the machine, run DiskCryptor from the Start Menu.
@@ -21,7 +27,7 @@ DiskCryptor is very easy to set up on an existing Windows installation, and beca
 
 *DiskCryptor uses a US keyboard layout during boot (not when you set the password in Windows). So some special characters might be in different places.*
 
-**Recovery Process when the password has been lost**
+# **Recovery Process when the password has been lost**
 
 To understand what you're doing you need to understand a bit more about how DiskCryptor works when it encrypts your disk.
 
@@ -42,7 +48,7 @@ Because Windows won't boot to run the DiskCryptor software, you need the DiskCry
 6. You should then be able to select the Header Backup file.
 7. Reboot the machine and you should be able to unlock the encryption with the old password which I hope you still have saved somewhere super-safe.
 
-**Changing the password after initial encryption**
+# **Changing the password after initial encryption**
 
 1. Run DiskCryptor from the Start Menu.
 2. Select C: from the list and click on Tools > Change Password.
