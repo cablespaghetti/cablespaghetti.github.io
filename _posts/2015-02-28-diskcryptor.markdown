@@ -6,7 +6,7 @@ tags: encryption
 ---
 A few months ago I was tasked with encrypting the laptops of a few of our consultants who travel a fair bit. I was going to go with Microsoft BitLocker, but as we use Windows 7 Professional we're out of luck. I also looked at using TrueCrypt, but there are a lot of question marks around it since it was [abandoned by its developers](http://truecrypt.sourceforge.net/) and its successor [VeraCrypt](https://veracrypt.codeplex.com/) wasn't around at the time I was looking. There are also a lot of enterprise paid options, but for our usage the free options are perfectly fit for purpose.
 
-One thing that I did find about DiskCryptor was that the documentation, especially around the forgotten password reset process, was a bit lacking. So here is the documentation I wrote for our internal wiki (with some small changes), which covers the encryption process and what to do if you/one of your users forgets their password. 
+DiskCryptor is very easy to set up on an existing Windows installation, and because it uses the hardware AES encryption support built into most modern processors there is no perceivable affect on system performance. However I did find that the documentation, especially around the forgotten password reset process, was a bit lacking. So here is the documentation I wrote for our internal wiki (with some small changes), which covers the encryption process and what to do if you/one of your users forgets their password.
 
 **Encrypting a laptop**
 
@@ -42,7 +42,7 @@ Because Windows won't boot to run the DiskCryptor software, you need the DiskCry
 6. You should then be able to select the Header Backup file.
 7. Reboot the machine and you should be able to unlock the encryption with the old password which I hope you still have saved somewhere super-safe.
 
-**Changing the password after intial encryption**
+**Changing the password after initial encryption**
 
 1. Run DiskCryptor from the Start Menu.
 2. Select C: from the list and click on Tools > Change Password.
