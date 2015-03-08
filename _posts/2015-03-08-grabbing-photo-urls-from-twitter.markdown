@@ -7,6 +7,9 @@ tags: scripts python
 ---
 Yesterday I helped out at [#CodeOff2015](https://twitter.com/search?q=%23codeoff2015), an event that my employer [Snowflake Software](http://snowflakesoftware.com) runs every year at the [Electronics and Computer Science department at the University of Southampton](http://www.ecs.soton.ac.uk/) (which also happens to be where I studied). We give students the day to write software to solve a problem that we set, they get judged at the end of the day and then the winner gets a paid summer internship with our development team. A great way to find talented developers, I'm sure you'll agree!
 
+Here are the students tucking in to the free pizza:
+![Students tucking in to free pizza](/assets/codeoff2015.jpg)
+
 The morning was a bit hectic, helping everyone to get started and solving a few connectivity problems with the resources we had provided. However after they were all busy coding I thought I'd set myself a little (or so I thought) challenge, to brush up on my (very ropey) Python skills. 
 
 I had set up an internal website within ECS to host the various resources using [Bootstrap](http://getbootstrap.com/) and as the day went on, there were lots of photos posted under the hashtag on Twitter. I thought I'd use Twitter's API and Bootstrap's carousel/slideshow feature to show the latest photos on the website.
