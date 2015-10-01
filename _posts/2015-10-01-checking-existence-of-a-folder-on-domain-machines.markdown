@@ -12,7 +12,8 @@ I've been trying to get Oracle Java updates to deploy via Group Policy. I've tri
 
 Anyway, I needed a way of finding a list of machines where the JRE install had failed or not run because the user hasn't rebooted for a while. So basically I needed to check that the Java install directory was present on all PCs on the Windows domain.
 
-Here's the surprisingly short script I came up with. I expected it to be much more work.
+The script just gets a list of the computers in the relevant OU and then loops over them, printing a message if it finds 'Program Files' but not the specific Java directory. This weeds out machines that are unreachable or not running Windows (we've got a few Ubuntu boxes in our Workstations OU). I expected it to be much more work!
+
 {% highlight powershell %}
 $Computers = Get-ADComputer -filter * -Searchbase "OU=ComputerOU,DC=Domain,DC=Local" | % {$_.Name}
 Foreach($Computer in $Computers) {
