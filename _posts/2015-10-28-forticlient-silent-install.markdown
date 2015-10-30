@@ -24,26 +24,25 @@ I clearly should have read the messages that the installer spits out. I would ha
 As a little bonus, I found [this post](https://forum.fortinet.com/tm.aspx?m=96610) on the Fortinet forums. If you push out these Registry settings to HKEY_CURRENT_USER with the User Configuration > Preferences > Windows Settings > Registry part of Group Policy you can pre-configure the client and save your users some typing (and yourself some support queries).
 
 This is the registry file that I applied to my laptop and then imported into a GPO using the Registry Wizard (easier then doing it all by hand!):
-'''
-Windows Registry Editor Version 5.00
 
-[HKEY_CURRENT_USER\SOFTWARE\Fortinet]
-@=""
-
-[HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient]
-@=""
-"KeepConnectionAlive"="1"
-"Installed"=dword:00000001
-"ConnectionName"="CompanyVPN"
-"ServerAddress"=""
-"ServerPort"=""
-
-[HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient\Tunnels]
-@=""
-
-[HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient\Tunnels\CompanyVPN]
-@=""
-"ServerCert"="1"
-"Server"="vpn.company.com:443"
-"Description"="My Company's VPN Setting"
-'''
+    Windows Registry Editor Version 5.00
+    
+    [HKEY_CURRENT_USER\SOFTWARE\Fortinet]
+    @=""
+    
+    [HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient]
+    @=""
+    "KeepConnectionAlive"="1"
+    "Installed"=dword:00000001
+    "ConnectionName"="CompanyVPN"
+    "ServerAddress"=""
+    "ServerPort"=""
+    
+    [HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient\Tunnels]
+    @=""
+    
+    [HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient\Tunnels\CompanyVPN]
+    @=""
+    "ServerCert"="1"
+    "Server"="vpn.company.com:443"
+    "Description"="My Company's VPN Setting"
