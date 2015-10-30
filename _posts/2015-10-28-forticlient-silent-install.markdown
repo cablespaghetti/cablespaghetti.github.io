@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "FortiClient SSLVPN Client Silent Install with Group Policy"
+title:  "FortiClient SSL VPN Silent Install with Group Policy"
 description: "I've never been able to find a way to silently install the Fortinet SSLVPN client with Group Policy or otherwise. Today I had a bit of a break through."
 date:   2015-10-28 21:00
 tags: scripts networking windows
@@ -22,3 +22,28 @@ Heres how:
 I clearly should have read the messages that the installer spits out. I would have found this out much sooner! However I'm surprised this isn't documented anywhere online and their support team aren't aware of it.
 
 As a little bonus, I found [this post](https://forum.fortinet.com/tm.aspx?m=96610) on the Fortinet forums. If you push out these Registry settings to HKEY_CURRENT_USER with the User Configuration > Preferences > Windows Settings > Registry part of Group Policy you can pre-configure the client and save your users some typing (and yourself some support queries).
+
+This is the registry file that I applied to my laptop and then imported into a GPO using the Registry Wizard (easier then doing it all by hand!):
+'''
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Fortinet]
+@=""
+
+[HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient]
+@=""
+"KeepConnectionAlive"="1"
+"Installed"=dword:00000001
+"ConnectionName"="CompanyVPN"
+"ServerAddress"=""
+"ServerPort"=""
+
+[HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient\Tunnels]
+@=""
+
+[HKEY_CURRENT_USER\SOFTWARE\Fortinet\SslvpnClient\Tunnels\CompanyVPN]
+@=""
+"ServerCert"="1"
+"Server"="vpn.company.com:443"
+"Description"="My Company's VPN Setting"
+'''
