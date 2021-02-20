@@ -1,18 +1,46 @@
 ---
-layout: default
+layout: page
+description: "A random collection of thoughts, information and revelations which I saw fit to share with the world."
 ---
-<div class="posts">
-  {% for post in site.posts %}
-    {% unless post.draft %}
-    <article class="post">    
-    <h3 class="post-link"><a href="{{ post.url }}">{{ post.title }}</a></h3>
-    <span class="post-meta">{{ post.date | date: "%d %B %Y" }}</span>
-    {{ post.excerpt }}
-    <p><a href="{{ post.url }}">Read more</a></p>
-    {% unless post == site.posts.last %}
-    <br /><hr style="background-color: #e8e8e8; height: 1px; border-top-style: none; border-bottom-style: none; border-left-style: none; border-right-style: none;"/><br />
-    {% endunless %}
-    </article>
-    {% endunless %}
-  {% endfor %}
+
+{% for post in paginator.posts %}
+<div class="post-preview">
+    <a href="{{ post.url | prepend: site.baseurl }}">
+        <h2 class="post-title">
+            {{ post.title }}
+        </h2>
+        {% if post.subtitle %}
+        <h3 class="post-subtitle">
+            {{ post.subtitle }}
+        </h3>
+        {% endif %}
+        <div class="post-content-preview">
+            {% if post.lang == 'en' %}
+                {{ post.content | strip_html | truncate:300 }}
+            {% else %}
+                {{ post.content | strip_html | truncate:200 }}
+            {% endif %}
+        </div>
+    </a>
+    <p class="post-meta">
+        {{ post.date | date: "%B %-d, %Y" }}
+    </p>
 </div>
+<hr>
+{% endfor %}
+
+<!-- Pager -->
+{% if paginator.total_pages > 1 %}
+<ul class="pager">
+    {% if paginator.previous_page %}
+    <li class="previous">
+        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+    </li>
+    {% endif %}
+    {% if paginator.next_page %}
+    <li class="next">
+        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
