@@ -1,6 +1,6 @@
 # Site settings
-title: Sam's brain dump
-description: A collection of scripts, tidbits and revelations that I feel the need to share with the world.
+title: Cablespaghetti
+description: A random collection of thoughts, information and revelations which I saw fit to share with the world.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://cablespaghetti.dev" # the base hostname & protocol for your site
 twitter_username: cablespaghetti
