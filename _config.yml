@@ -1,7 +1,7 @@
 # Site settings
 title: CableSpaghetti
 SEOTitle: CableSpaghetti
-header-img: img/home-bg.jpg
+header-img: assets/wires-3702104-darker.webp
 description: "A random collection of thoughts, information and revelations which I saw fit to share with the world."
 keyword: "cablespaghetti, @cablespaghetti, kubernetes, linux, open source, cloud native, devops, k3s, bash"
 url: "https://cablespaghetti.dev"        # your host, for absolute URL
