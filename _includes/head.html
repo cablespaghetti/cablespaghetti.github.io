@@ -4,9 +4,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-    {% if page.description %}<meta property="og:description" content="{{ page.description }}" /><meta name="twitter:description" content="{{ page.description }}" />{% else %}<meta property="og:description" content="{{ site.description }}" /><meta name="twitter:description" content="{{ site.description }}" />{% endif %}
+    {% if page.description %}
+    <meta property="og:description" content="{{ page.description }}" />
+    <meta name="twitter:description" content="{{ page.description }}" />
+    <meta name="description" content="{{ page.description }}" />
+    {% else %}
+    <meta property="og:description" content="{{ site.description }}" />
+    <meta name="twitter:description" content="{{ site.description }}" />
+    <meta name="description" content="{{ site.description }}" />
+    {% endif %}
 
-    {% if page.title %}<meta property="og:title" content="{{ page.title }}" /><meta name="twitter:title" content="{{ page.title }}" />{% else %}<meta property="og:title" content="{{ site.title }}" /><meta name="twitter:title" content="{{ site.title }}" />{% endif %}
+    {% if page.title %}
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta name="twitter:title" content="{{ page.title }}" />
+    {% else %}
+    <meta property="og:title" content="{{ site.title }}" />
+    <meta name="twitter:title" content="{{ site.title }}" />
+    {% endif %}
+
+    <meta property="og:site_name" content="{{ site.title }}" />
     <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
     {% if page.tags %}<meta property="og:type" content="article" />{% else %}<meta property="og:type" content="website" />{% endif %}
     {% for tag in page.tags %}<meta property="article:tag" content="{{ tag }}" />{% endfor %}
@@ -14,6 +30,9 @@
     <meta property="og:image" content="https://cablespaghetti.dev/assets/wires-3702104_1280.jpg" />
     <meta name="twitter:image" content="https://cablespaghetti.dev/assets/wires-3702104_1280.jpg" />
     <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:domain" content="cablespaghetti.dev" />
+    <meta name="twitter:creator" content="@cablespaghetti" />
+    <meta name="twitter:site" content="@cablespaghetti" />
 
     <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}" />
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" />
