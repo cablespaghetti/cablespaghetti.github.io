@@ -3,13 +3,13 @@ title: Sam's brain dump
 description: A collection of scripts, tidbits and revelations that I feel the need to share with the world.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://cablespaghetti.github.io" # the base hostname & protocol for your site
-twitter_username: followthesam
+twitter_username: cablespaghetti
 github_username:  cablespaghetti
 timezone: Europe/London
 
 # Build settings
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 
 gems:
   - jekyll-sitemap
