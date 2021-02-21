@@ -6,6 +6,7 @@ description: "A random collection of thoughts, information and revelations which
 keyword: "cablespaghetti, @cablespaghetti, kubernetes, linux, open source, cloud native, devops, k3s, bash"
 url: "https://cablespaghetti.dev"        # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+safe: true
 
 # Publish posts or collection documents with a future date.
 future: true
@@ -34,9 +35,12 @@ timezone: Europe/London
 # from PR#40, to support local preview for Jekyll 3.0
 # make sure you have this gem installed
 # `$ gem install jekyll-paginate`
-plugins: [jekyll-paginate]
+plugins:
+  - jekyll-paginate
+  - jekyll-redirect-from
 
-
+whitelist:
+  - jekyll-redirect-from
 
 # Markdown settings
 # replace redcarpet to kramdown,

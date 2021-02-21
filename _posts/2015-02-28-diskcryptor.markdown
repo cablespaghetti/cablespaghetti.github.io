@@ -4,6 +4,8 @@ title:  "DiskCryptor full disk encryption"
 description: "A few months ago I was tasked with encrypting the laptops of a few of our consultants who travel a fair bit. I was going to go with Microsoft BitLocker, but as we use Windows 7 Professional we're out of luck. I also looked at using TrueCrypt, but there are a lot of question marks around it since it was abandoned by its developers..."
 date:   2015-02-28 19:12
 tags: encryption
+redirect_from:
+  - /2015/02/28/diskcryptor.html 
 ---
 A few months ago I was tasked with encrypting the laptops of a few of our consultants who travel a fair bit. I was going to go with Microsoft BitLocker, but as we use Windows 7 Professional we're out of luck. I also looked at using TrueCrypt, but there are a lot of question marks around it since it was [abandoned by its developers](http://truecrypt.sourceforge.net/) and its successor [VeraCrypt](https://veracrypt.codeplex.com/) wasn't around at the time I was looking. There are also a lot of enterprise paid options, but for our usage the free options are perfectly fit for purpose.
 

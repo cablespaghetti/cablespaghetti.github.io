@@ -4,6 +4,8 @@ title:  "It seems I started a blog"
 description: "I've had websites of my own in the past and they always start off great but then get left and eventually taken offline out of embarrassment. I suppose this is due to lack of time, inspiration, or just plain laziness."
 date:   2015-02-22 20:13
 tags: life jekyll
+redirect_from:
+  - /2015/02/22/it-seems-i-started-a-blog.html
 ---
 I've had websites of my own in the past and they always start off great but then get left and eventually taken offline out of embarrassment. I suppose this is due to lack of time, inspiration, or just plain laziness. However since I started a new job as Systems Administrator at [Snowflake Software][snowflake] back in April, there have been quite a few occasions where I've not been able to find a solution to a problem with my standard Internet search (shocking I know!).
 

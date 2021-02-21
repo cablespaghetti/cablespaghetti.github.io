@@ -4,6 +4,8 @@ title:  "Getting up and running with multi-arch containers on Kubernetes"
 description: "How to effectively add arm64 nodes into an existing amd64 Kubernetes cluster without making problems for yourself."
 date: 2021-02-20 17:00
 tags: kubernetes arm aws
+redirect_from:
+  - /2021/02/20/managing-multi-arch-kubernetes-clusters.html
 ---
 
 The world of ARM processors has been getting very interesting over the last few years. Until fairly recently, for most people, ARM CPUs were reserved for their phone or maybe a [Raspberry Pi running their home DNS](https://pi-hole.net/). However now the Raspberry Pi 4 has a pretty decent quad-core CPU and up to 8GB RAM, Apple have blown away the industry with the M1 chips and AWS have launched [Graviton2](https://aws.amazon.com/ec2/graviton/) instances which depending on who you ask have 20-40% better price/performance than the Intel equivalents.

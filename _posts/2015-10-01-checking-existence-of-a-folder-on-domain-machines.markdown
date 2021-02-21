@@ -4,6 +4,8 @@ title:  "Checking the existence of a folder on all domain machines"
 description: "I needed a way of finding a list of machines where the JRE install had failed or not run because the user hasn't rebooted for a while. So basically I needed to check that the Java install directory was present on all PCs on the Windows domain."
 date:   2015-10-01 18:00
 tags: scripts powershell
+redirect_from:
+  - /2015/10/01/checking-existence-of-a-folder-on-domain-machines.html
 ---
 
 I haven't posted since March which is pretty shameful. I've been extremely busy working on some web services magic that I can't really share at this point if I value my pay check. However I had a sysadmin problem today that warranted some script writing which I thought I'd share.
