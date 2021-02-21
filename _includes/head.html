@@ -13,7 +13,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
     <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
-    <meta name="description" content=""{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %} />
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
     {% if page.date %}
     <meta property="article:published_time" content="{{ page.date | date: "%Y-%m-%dT%H:%M:%SZ" }}" />
     {% endif %}
@@ -27,7 +27,7 @@
     <meta property="og:type" content="website">
     <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
     <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
-    <meta name="description" content=""{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %} />
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
     {% endcase %}
     <meta property="og:image" content="https://cablespaghetti.dev/assets/wires-3702104_1280.jpg" />
     <meta name="twitter:image" content="https://cablespaghetti.dev/assets/wires-3702104_1280.jpg" />
