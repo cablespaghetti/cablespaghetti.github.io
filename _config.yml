@@ -75,7 +75,7 @@ ga_domain: cablespaghetti.dev
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Professional Kubernetes, Linux and Open Source nerd. Father of two, husband and dog owner. Opinions are my own and very much subject to change. He/Him."
+sidebar-about-description: "<strong>Sam Weston</strong><br/>Professional Kubernetes, Linux and Open Source nerd. Father of two, husband and dog owner. Opinions are my own and very much subject to change. He/Him."
 sidebar-avatar: /img/avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
