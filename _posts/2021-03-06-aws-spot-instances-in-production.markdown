@@ -58,7 +58,7 @@ In practice we've gone with this configuration:
 
 * A set of three Auto Scaling Groups set to request `m5a.xlarge` On Demand instances; for `us-east-1a`, `us-east-1b` and `us-east-1c`. These Nodes are labelled with `capacity-type=on-demand` when they join the cluster by adding parameters to the `bootstrap.sh` script in the EKS Worker Node AMI; [this article covers how that works](https://aws.amazon.com/blogs/opensource/improvements-eks-worker-node-provisioning/).
 * A set of three Auto Scaling Groups using a mixed instances policy (mentioned above) which request Spot Instances of `m5.xlarge`, `m4.xlarge` and `m5a.xlarge` in the same AZs. These are labelled with `capacity-type=spot`.
-* A set of three Auto Scaling Groups requesting Spot `m6g.xlarge` ARM instances ([see my ARM cluster article](2021-02-20-managing-multi-arch-kubernetes-clusters.markdown)).
+* A set of three Auto Scaling Groups requesting Spot `m6g.xlarge` ARM instances ([see my ARM cluster article]({% link _posts/2021-02-20-managing-multi-arch-kubernetes-clusters.markdown %})).
 
 We then use the [Priority Expander](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md) in the Kubernetes Cluster Autoscaler to make the Spot Auto Scaling Groups higher priority than the On Demand ones, so the On Demand groups are only scaled up if capacity is not available in the Spot groups. The [Helm Chart](https://github.com/kubernetes/autoscaler/blob/master/charts/cluster-autoscaler/values.yaml) helpfully makes this really easy to configure.
 
