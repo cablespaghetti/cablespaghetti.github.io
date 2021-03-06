@@ -30,9 +30,9 @@ For example you can request m4.xlarge, m5.xlarge and m5a.xlarge with 20% On Dema
 
 Spot is not for everyone; it requires your workloads to handle individual Kubernetes Pods being terminated without causing downtime. This is of course good practice anyway, but most companies have at least a few legacy apps which can only run a single instance; these are not suited to running on spot. However I'll talk about how you and "pin" these apps to your On-Demand instances later on.
 
-Disclaimers out of the way, we went primarily with Spot for a few reasons. Firstly, that is the cheapest possible way to get compute on AWS; even if you pay for a Reserved Instance for 3 years upfront it's about 60% savings (depending on region and instance type) and the more sane 1 year term is about 40%.
+Disclaimers out of the way, we went primarily with Spot for a few reasons. Firstly, that it is the cheapest possible way to get compute on AWS; even if you pay for a Reserved Instance for 3 years upfront it's about 60% savings (depending on region and instance type) and the more sane 1 year term is about 40%.With Spot Instances you can typically expect about a 70% saving.
 
-With Spot Instances you can typically expect about a 70% saving. Secondly, our load is quite spiky; at peak load we need about 80 instances in our main production cluster but the rest of the time it's maybe only 40 instances; so reserved instances would only make sense for about half the cluster anyway.
+Secondly, our load is quite spiky; at peak load we need about 80 instances in our main production cluster but the rest of the time it's maybe only 40 instances; so reserved instances would only make sense for about half the cluster anyway.
 
 ## Preparation
 
