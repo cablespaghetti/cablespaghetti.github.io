@@ -6,8 +6,6 @@ date: 2021-03-05 17:00
 tags: kubernetes aws spot
 ---
 
-*Updated 7th March 2021 to include Managed Node Groups*
-
 At work we have a number of fairly large Kubernetes clusters on Amazon EKS; some with 50 or 60 "xlarge" nodes. This amount of compute on AWS can cost a fortune every month, so of course we wanted to do what we could to reduce this.
 
 ## How do Spot Instances work?
