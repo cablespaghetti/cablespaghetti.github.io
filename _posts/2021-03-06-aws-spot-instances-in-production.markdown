@@ -6,6 +6,8 @@ date: 2021-03-05 17:00
 tags: kubernetes aws spot
 ---
 
+*Updated 7th March 2021 to include Managed Node Groups*
+
 At work we have a number of fairly large Kubernetes clusters on Amazon EKS; some with 50 or 60 "xlarge" nodes. This amount of compute on AWS can cost a fortune every month, so of course we wanted to do what we could to reduce this.
 
 ## How do Spot Instances work?
@@ -26,6 +28,8 @@ Another change which made Spot Instances more suitable for production was the in
 
 For example you can request m4.xlarge, m5.xlarge and m5a.xlarge with 20% On Demand. You will then get 20% of your requested capacity as On Demand and Spot instances will make up the rest out of the selected types. The instances you get are based on which Amazon has most spare capacity of. This minimises the chance of your instances being terminated and maximises the chance of your ASG being able to provision instances.
 
+In December 2020 [AWS added Spot Instance support to Managed Node Groups](https://aws.amazon.com/blogs/containers/amazon-eks-now-supports-provisioning-and-managing-ec2-spot-instances-in-managed-node-groups/). This takes a lot of the complexity out of managing your nodes, but doesn't change much of this information. I have noted where things differ between the two approaches.
+
 ## When to use Spot Instances
 
 Spot is not for everyone; it requires your workloads to handle individual Kubernetes Pods being terminated without causing downtime. This is of course good practice anyway, but most companies have at least a few legacy apps which can only run a single instance; these are not suited to running on spot. However I'll talk about how you and "pin" these apps to your On-Demand instances later on.
@@ -44,21 +48,25 @@ If your Kubernetes cluster nodes are fairly likely to disappear, it's a good ide
 
 ### AWS Node Termination Handler
 
-The [AWS Node Termination Handler](https://github.com/aws/aws-node-termination-handler) is run as a Kubernetes DaemonSet so there is an Pod on every Node in your cluster. It listens for a number of different AWS events, but the one we care about is the "Spot Instance Termination Notification" which comes 2 minutes before a Spot Instance is terminated.
+If you are _not_ using Managed Node Groups, the [AWS Node Termination Handler](https://github.com/aws/aws-node-termination-handler) listens for "Spot Instance Termination Notification" events from AWS (and a number of others). These events come 2 minutes before your nodes are terminated.
 
 When it receives one of these events it will gracefully Cordon and [Drain the Node](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/), to move the Pods to other instances before the Node is terminated.
 
+One of the advantages of Managed Node Groups is that this is all handled for you without running additional services.
+
 ## Setting up your Auto Scaling Groups
 
-The Kubernetes [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler) is quite particular about how your Auto Scaling Groups are set up. This will also impact how your Nodes are labelled when they join the cluster, so you can identify which ones are On Demand and which are Spot.
+The Kubernetes [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler) is quite particular about how your Auto Scaling Groups (or Managed Node Groups) are set up. This will also impact how your Nodes are labelled when they join the cluster, so you can identify which ones are On Demand and which are Spot.
 
-The Cluster Autoscaler only works properly if you have a separate Auto Scaling Group for each Availability Zone you want to use. It also needs the Nodes to be of the same *CPU and RAM capacity*, so it can properly estimate what will fit on new nodes it spins up.
+The Cluster Autoscaler only works properly if you have a separate Auto Scaling Group (or Managed Node Group) for each Availability Zone you want to use. It also needs the Nodes to be of the same *CPU and RAM capacity*, so it can properly estimate what will fit on new nodes it spins up.
 
 In practice we've gone with this configuration:
 
 * A set of three Auto Scaling Groups set to request `m5a.xlarge` On Demand instances; for `us-east-1a`, `us-east-1b` and `us-east-1c`. These Nodes are labelled with `capacity-type=on-demand` when they join the cluster by adding parameters to the `bootstrap.sh` script in the EKS Worker Node AMI; [this article covers how that works](https://aws.amazon.com/blogs/opensource/improvements-eks-worker-node-provisioning/).
 * A set of three Auto Scaling Groups using a mixed instances policy (mentioned above) which request Spot Instances of `m5.xlarge`, `m4.xlarge` and `m5a.xlarge` in the same AZs. These are labelled with `capacity-type=spot`.
 * A set of three Auto Scaling Groups requesting Spot `m6g.xlarge` ARM instances ([see my ARM cluster article]({% link _posts/2021-02-20-managing-multi-arch-kubernetes-clusters.markdown %})).
+
+The only difference when using [Manged Node Groups](https://aws.amazon.com/blogs/containers/amazon-eks-now-supports-provisioning-and-managing-ec2-spot-instances-in-managed-node-groups/), is that changing the Node labels can be done from the AWS Console rather than editing the `bootstrap.sh` parameters.
 
 We then use the [Priority Expander](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md) in the Kubernetes Cluster Autoscaler to make the Spot Auto Scaling Groups higher priority than the On Demand ones, so the On Demand groups are only scaled up if capacity is not available in the Spot groups. The [Helm Chart](https://github.com/kubernetes/autoscaler/blob/master/charts/cluster-autoscaler/values.yaml) helpfully makes this really easy to configure.
 
