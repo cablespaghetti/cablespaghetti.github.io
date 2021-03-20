@@ -1,16 +1,16 @@
 ---
 layout: post
-title:  "Amazon EKS Managed Node Groups, the good, the bad and the config"
+title:  "EKS Managed Node Groups, the good, the bad and the config"
 description: "The pros and cons, and how to migrate to Amazon EKS Managed Node Groups."
 date: 2021-03-20 17:00
 tags: kubernetes aws eks
 ---
 
-Amazon EKS launched in 2018 to the relief of many who had been managing their own Kubernetes clusters on AWS. However it wasn't as fully featured as some had hoped out of the gate. One of the big improvments Amazon made was to release [Managed Node Groups](https://aws.amazon.com/blogs/containers/eks-managed-node-groups/) in 2019. This removed the need for people to manage their own Auto Scaling Groups for their Kubernetes nodes and tasks like replacing nodes to upgrade to a new AMI no longer required a long drawn out manual process or [home grown automation](https://github.com/hellofresh/eks-rolling-update).
+Amazon EKS launched in 2018 to the relief of many who had been managing their own Kubernetes clusters on AWS. However it wasn't as fully featured as some had hoped out of the gate. One of the big improvements Amazon made was to release [Managed Node Groups](https://aws.amazon.com/blogs/containers/eks-managed-node-groups/) in 2019; this removed the need for people to manage their own Auto Scaling Groups and tasks like replacing nodes to upgrade to a new AMI version no longer required a long drawn out manual process or [home grown automation](https://github.com/hellofresh/eks-rolling-update).
 
-Unfortunately the initial release of Managed Node Groups had some limitations which meant it wasn't suitable for everyone. Most importantly for us, it only supported On Demand instances, but users also couldn't customise the Launch Template used for the nodes; this restricted us to using the official EKS Optimized AMI and only customising node labels rather than having full control over the [bootstrap.sh script](https://aws.amazon.com/blogs/opensource/improvements-eks-worker-node-provisioning/). 
+Although they were a bit step forward for EKS usability, the initial release of Managed Node Groups had some limitations which meant it wasn't suitable for everyone. Most importantly for us, it only supported On Demand instances, but users also couldn't customise the Launch Template for the nodes; this restricted us to using the official EKS Optimized AMI and only customising node labels rather than having full control over the [bootstrap.sh script](https://aws.amazon.com/blogs/opensource/improvements-eks-worker-node-provisioning/). 
 
-The features which ultimately made them viable for us were [launch template support](https://aws.amazon.com/blogs/containers/introducing-launch-template-and-custom-ami-support-in-amazon-eks-managed-node-groups/) and [spot instance support](https://aws.amazon.com/blogs/containers/amazon-eks-now-supports-provisioning-and-managing-ec2-spot-instances-in-managed-node-groups/) which came out late last year, [although I only found out a couple of weeks ago](https://twitter.com/rothgar/status/1368457026175602693).
+[Launch template support](https://aws.amazon.com/blogs/containers/introducing-launch-template-and-custom-ami-support-in-amazon-eks-managed-node-groups/) was released in August 2020 and then in December so was [spot instance support](https://aws.amazon.com/blogs/containers/amazon-eks-now-supports-provisioning-and-managing-ec2-spot-instances-in-managed-node-groups/) ([although I only found out a couple of weeks ago](https://twitter.com/rothgar/status/1368457026175602693)). These two features ultimately made Managed Node Groups flexible enough for most users, even awkward ones like myself.
 
 You can read a little more about how we've got things set up in my [previous post about spot instances](https://cablespaghetti.dev/2021/03/05/aws-spot-instances-in-production/). However I'll go into more detail on the Managed Node Group specifics in this post. The short version is that we obviously needed Spot support and to customise the taints on our [ARM nodes](https://cablespaghetti.dev/2021/02/20/managing-multi-arch-kubernetes-clusters/).
 
@@ -18,15 +18,15 @@ You can read a little more about how we've got things set up in my [previous pos
 
 The primary reason we desperately wanted to move to Managed Node Groups is the amount of time and effort it took us to upgrade to a new AMI; either to get a security fix or upgrade to a new Kubernetes version. We've been using [hellofresh/eks-rolling-update](https://github.com/hellofresh/eks-rolling-update) for this which is a great tool, but needs to be run manually. This isn't too much of a problem with one or two clusters but for fifteen it gets *very* time consuming.
 
-Whilst it didn't really benefit us, due to our customised configuration; it shouldn't be understated just *how much easier* it is to get started with EKS than it was previous, thanks to Managed Node Groups.
+Whilst it didn't really benefit us as established EKS users, it shouldn't be understated just *how much easier* it is to get started with EKS than it was previously, thanks to Managed Node Groups.
 
 ## The Bad
 
-For our specific use case where we have multiple groups of nodes with different priorities; so our groups with Spot Instances scale up most of the time and On Demand instances only get launched if those groups are unable to launch capacity, the naming of the Auto Scaling Groups which Managed Node Groups spin up under the hood was a problem. This is because the Kubernetes Cluster Autoscaler doesn't see the nice descriptive name you give your Node Group, it only sees the UUID style hash given to the ASG. I had to [build a tool](https://github.com/cablespaghetti/priority-expander-eks-managed-nodegroup-configurer) to generate Priority Expander configuration for the autoscaler to work around this. However if you're not using the Priority Expander it's not going to be an issue.
+We have a fairly unusual set up, where we have multiple groups of nodes with different priorities; when we scale up we usually get Spot Instances, with On Demand instances only getting launched if there is no Spot capacity available. Unfortunately for this use case the naming of the Auto Scaling Groups which Managed Node Groups create under the hood is a problem; this is because the Kubernetes Cluster Autoscaler doesn't see the nice descriptive name you give your Node Group, it only sees the UUID style hash given to the ASG. I had to [build a tool](https://github.com/cablespaghetti/priority-expander-eks-managed-nodegroup-configurer) to generate Priority Expander configuration for the autoscaler to work around this. However if you're not using the Priority Expander it's not going to be an issue.
 
 ## The Config
 
-We found launching managed node groups with our own custom Launch Template to be a little *nuanced*. For example we had some cryptic error messages from Terraform/the API when trying to use a custom user-data script without explicitly setting the AMI. Here's the Terraform we used in case it helps others who need to tweak things in more complex ways:
+We found launching managed node groups with our own custom Launch Template to be a little *nuanced*; for example we had some cryptic error messages from Terraform when trying to use a custom user-data script without explicitly setting the AMI. Here's the Terraform we used in case it helps others who need to tweak things in more complex ways:
 
 `user-data.sh`:
 ```sh
