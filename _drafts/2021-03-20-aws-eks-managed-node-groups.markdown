@@ -6,19 +6,19 @@ date: 2021-03-20 17:00
 tags: kubernetes aws eks
 ---
 
-Amazon EKS launched in 2018 to the relief of many who had been managing their own Kubernetes clusters on AWS. However it wasn't as fully featured as some had hoped out of the gate. One of the big improvments Amazon made was to release (Managed Node Groups)[https://aws.amazon.com/blogs/containers/eks-managed-node-groups/) in 2019. This removed the need for people to manage their own Auto Scaling Groups for their Kubernetes nodes on EKS and tasks like replacing nodes to upgrade to a new AMI release no longer required a long drawn out manual process or [home grown automation](https://github.com/hellofresh/eks-rolling-update).
+Amazon EKS launched in 2018 to the relief of many who had been managing their own Kubernetes clusters on AWS. However it wasn't as fully featured as some had hoped out of the gate. One of the big improvments Amazon made was to release [Managed Node Groups](https://aws.amazon.com/blogs/containers/eks-managed-node-groups/) in 2019. This removed the need for people to manage their own Auto Scaling Groups for their Kubernetes nodes and tasks like replacing nodes to upgrade to a new AMI no longer required a long drawn out manual process or [home grown automation](https://github.com/hellofresh/eks-rolling-update).
 
-Unfortunately the initial release of Managed Node Groups had some limitations which meant it wasn't suitable for everyone (including us). Most importantly for us, it only supported On Demand instances, but users could also not customise the Launch Template used for the nodes so were restricted to using the official EKS Optimized AMI and could only customise node labels rather than having full control over the [bootstrap.sh script](https://aws.amazon.com/blogs/opensource/improvements-eks-worker-node-provisioning/). 
+Unfortunately the initial release of Managed Node Groups had some limitations which meant it wasn't suitable for everyone. Most importantly for us, it only supported On Demand instances, but users also couldn't customise the Launch Template used for the nodes; this restricted us to using the official EKS Optimized AMI and only customising node labels rather than having full control over the [bootstrap.sh script](https://aws.amazon.com/blogs/opensource/improvements-eks-worker-node-provisioning/). 
 
 The features which ultimately made them viable for us were [launch template support](https://aws.amazon.com/blogs/containers/introducing-launch-template-and-custom-ami-support-in-amazon-eks-managed-node-groups/) and [spot instance support](https://aws.amazon.com/blogs/containers/amazon-eks-now-supports-provisioning-and-managing-ec2-spot-instances-in-managed-node-groups/) which came out late last year, [although I only found out a couple of weeks ago](https://twitter.com/rothgar/status/1368457026175602693).
 
-You can read a little more about how we've got things set up in my [previous post about spot instances](https://cablespaghetti.dev/2021/03/05/aws-spot-instances-in-production/). However I'll go into more detail on the Managed Node Group specifics in this post. The short version is that we obviously needed Spot support and to customise the taints on our [ARM nodes](https://cablespaghetti.dev/2021/02/20/managing-multi-arch-kubernetes-clusters/), so had to wait until now.
+You can read a little more about how we've got things set up in my [previous post about spot instances](https://cablespaghetti.dev/2021/03/05/aws-spot-instances-in-production/). However I'll go into more detail on the Managed Node Group specifics in this post. The short version is that we obviously needed Spot support and to customise the taints on our [ARM nodes](https://cablespaghetti.dev/2021/02/20/managing-multi-arch-kubernetes-clusters/).
 
 ## The Good
 
-The primary reason we desperately wanted to move to Managed Node Groups is the amount of time and effort it currently takes us to upgrade to a new AMI, either to get a security fix or upgrade to a new Kubernetes version. We've been using [hellofresh/eks-rolling-update](https://github.com/hellofresh/eks-rolling-update) for this which is a great tool, but needs to be run manually. This isn't too much of a problem with one or two clusters but for fifteen it gets *very* time consuming.
+The primary reason we desperately wanted to move to Managed Node Groups is the amount of time and effort it took us to upgrade to a new AMI; either to get a security fix or upgrade to a new Kubernetes version. We've been using [hellofresh/eks-rolling-update](https://github.com/hellofresh/eks-rolling-update) for this which is a great tool, but needs to be run manually. This isn't too much of a problem with one or two clusters but for fifteen it gets *very* time consuming.
 
-There are other advantages, such as the reduction in complexity in adding nodes with a standard configuration to an EKS cluster which has been a bit of a barrier to entry until this point. However this wasn't a big factor for us, as we've customised things to much anyway in our Terraform config.
+Whilst it didn't really benefit us, due to our customised configuration; it shouldn't be understated just *how much easier* it is to get started with EKS than it was previous, thanks to Managed Node Groups.
 
 ## The Bad
 
@@ -26,7 +26,7 @@ For our specific use case where we have multiple groups of nodes with different 
 
 ## The Config
 
-We found launching managed node groups with our own custom Launch Template to be a little *nuanced*. For example we had some cryptic error messages when trying to use a custom user-data script without explicitly setting the AMI. Here's the Terraform we used in case it helps others who need to tweak things in more complex ways:
+We found launching managed node groups with our own custom Launch Template to be a little *nuanced*. For example we had some cryptic error messages from Terraform/the API when trying to use a custom user-data script without explicitly setting the AMI. Here's the Terraform we used in case it helps others who need to tweak things in more complex ways:
 
 `user-data.sh`:
 ```sh
@@ -74,7 +74,7 @@ data "aws_ssm_parameter" "eks-worker-ami-arm64" {
 }
 ```
 
-The there's the `launch_template`:
+The there's the `aws_launch_template`:
 ```terraform
 resource "aws_launch_template" "eks-cluster-node-group-worker-nodes-spot-arm64" {
   image_id               = data.aws_ssm_parameter.eks-worker-ami-arm64.value
@@ -98,7 +98,7 @@ resource "aws_launch_template" "eks-cluster-node-group-worker-nodes-spot-arm64" 
 }
 ```
 
-Finally the `node_group`:
+Finally the `aws_eks_node_group`:
 ```terraform
 resource "aws_eks_node_group" "eks-worker-nodes-spot-arm64" {
   count           = length(local.subnet-ids)
@@ -133,10 +133,14 @@ resource "aws_eks_node_group" "eks-worker-nodes-spot-arm64" {
 
 ## The Migration Steps
 
-* Upgrade the EKS Cluster
-* Upgrade kube-proxy, cluster autoscaler etc
-* Drain the nodes - kubectl drain --selector '!eks.amazonaws.com/nodegroup' --delete-local-data --ignore-daemonsets
-* Delete the old ASGs
+After migrating to Managed Node Groups, life obviously becomes much easier with managing nodes and Kubernetes upgrades. However the process to migrate from our old Auto Scaling Groups took a bit of thought to get right. So here it is:
 
+1. We were upgrading to Kubernetes 1.19 at the same time, so we followed the normal steps to do that. Upgrading the EKS Cluster control plane itself and ensuring kube-proxy, CoreDNS, the Cluster Autoscaler etc were up to date for that version, as per the AWS documentation.
+2. We applied the Terraform to create the new Managed Node Groups, without removing the old Auto Scaling Groups
+3. When the new nodes had finishing coming online we drained the old ones with this handy one-liner:
+  ```bash
+  kubectl drain --selector '!eks.amazonaws.com/nodegroup' --delete-local-data --ignore-daemonsets
+  ```
+4. We then removed the old Auto Scaling Groups from the Terraform and applied it to delete the old, now empty nodes.
 
-'m always happy to chat to people working on similar challenges, so get in touch on [Twitter](https://twitter.com/cablespaghetti) if you have any questions or just fancy a chat!
+I'm always happy to chat to people working on similar challenges, so get in touch on [Twitter](https://twitter.com/cablespaghetti) if you have any questions or just fancy a chat!
