@@ -68,7 +68,7 @@ The only difference when using [Manged Node Groups](https://aws.amazon.com/blogs
 
 We then use the [Priority Expander](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/expander/priority/readme.md) in the Kubernetes Cluster Autoscaler to make the Spot Auto Scaling Groups higher priority than the On Demand ones, so the On Demand groups are only scaled up if capacity is not available in the Spot groups. The [Helm Chart](https://github.com/kubernetes/autoscaler/blob/master/charts/cluster-autoscaler/values.yaml) helpfully makes this really easy to configure.
 
-With Managed Node Groups the cluster autoscaler only knows about ASG names not the Managed Node Group names. There is an option issues on the AWS [containers-roadmap GitHub](https://github.com/aws/containers-roadmap/issues/1304) to make the ASG names more identifiable. Until then I've written [a little utility to work around it](https://github.com/cablespaghetti/priority-expander-eks-managed-nodegroup-configurer).
+With Managed Node Groups the cluster autoscaler only knows about ASG names not the Managed Node Group names. There is an option issues on the AWS [containers-roadmap GitHub](https://github.com/aws/containers-roadmap/issues/1304) to make the ASG names more identifiable. Until then I've written [a little utility to work around it](https://github.com/cablespaghetti/priority-expander-eks-managed-nodegroup-configurer). There is also [this open issue](https://github.com/kubernetes/autoscaler/issues/3956) for the v1.19 cluster autoscaler which is worth watching out for.
 
 ## Node Affinity for apps we want to run on On Demand
 
