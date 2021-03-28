@@ -9,20 +9,20 @@ image: assets/thumbs/homecloudpart1-shed1.webp
 
 ## History
 
-For as long as I can remember, I've loved tinkering with hardware; this often manifests with installing Linux on computers which really should have been consigned to the bin a long time ago. In my teenage years I had a Pentium 3 machine with no case running a Counter Strike: Source server, a Pentium 2 running PfSense or something serving as a firewall (to separate my bedroom network from the rest of the house) and some old machine with a bunch of drives in USB 2.0 enclosures running as a Linux software RAID doing BitTorrent seed box/file server duties. Bear in mind that this was in the mid 2000s...so this hardware was extremely dated even then.
+For as long as I can remember, I've loved tinkering with hardware; this often manifests in the form of installing Linux on computers which really should have been consigned to the bin a long time ago. In my teenage years I had a Pentium III machine with no case sat on a bookshelf running a Counter Strike: Source server, a Pentium 2 running pfSense or something serving as a firewall (to separate my bedroom network from the rest of the house...obviously) and some old machine with a bunch of drives in USB 2.0 enclosures running as a Linux software RAID 5 doing BitTorrent seed box/file server duties. Bear in mind that this was in the mid 2000s...so this hardware was extremely dated even then.
 
 [![My bedroom circa 2006](/assets/thumbs/homecloudpart1-bedroom.webp)](/assets/homecloudpart1-bedroom.webp)
 
-Fast forward to 2021 and I'm ten years into a career in tech, with wife, two kids and a mortgage. However the things I enjoy tinkering with in my (very limited) spare time haven't changed that much, but it's been a few years since I've had anything worth calling a homelab. It's been 3 years since I had a job involving any physical hardware, and that desire to make use of old crusty hardware to build some cool infrastructure in my home has come back with a vengeance.
+Fast forward to 2021 and I'm ten years into a career in tech, with a wife, two kids and a mortgage. The things I enjoy tinkering with in my (very limited) spare time haven't changed that much, but it's been a few years since I've had anything worth calling a homelab. It's been 3 years since I had a job involving any physical hardware, and that desire to make use of old crusty machines to build some cool infrastructure at home has come back with a vengeance.
 
-Last summer, having worked at home on the dining table in a relatively small house with two very bored (and loud!) children I was desperate to find a better solution. We weren't in a position to move house and there was no space inside to turn into a proper office, so  I looked to the (~6 metre long) garden. Given the space constraints it wasn't possible to build anything bigger than the standard issue 2.4m garden shed, so with the help of my Dad, I insulated it, boarded it with recycled pallet wood and stuck in a couple of windows and a desk. Instant tiny office!
+Last summer, having worked at home at the kitchen dining table in a relatively small house, with two very bored (and loud!) children for a few months, I was desperate to build a better set-up. We weren't in a position to move house and there was no space I could turn into a proper office, so I looked to the (~6 metre long) garden for a solution. Given the space constraints it wasn't possible to build anything bigger than the standard issue 2.4m garden shed, so with the help of my Dad, I insulated it, boarded it with recycled pallet wood and stuck in a couple of windows and a desk. Instant tiny office!
 
 [![shed office exterior](/assets/thumbs/homecloudpart1-shed1.webp)](/assets/homecloudpart1-shed1.webp)
 [![shed office desk](/assets/thumbs/homecloudpart1-shed2.webp)](/assets/homecloudpart1-shed2.webp)
 
 ## What I have now
 
-Anyway, since having a bit of space to myself again, I couldn't help digging out some of my own hardware and having a tinker. This started off with running a k3s cluster made up of a Raspberry Pi 4 and an old Core i3 laptop. However I've also got an old HP Proliant ML110 G6 with a few drives in it, waiting to go into service as ZFS based storage server and recently bought a Lenovo M72e "Tiny" with a Core i5 and upgraded it to have 16GB RAM and an SSD.
+Anyway, since having a bit of space to myself again, I couldn't help digging out some of my old hardware and having a tinker. This started off with running a k3s cluster made up of a Raspberry Pi 4 and an old Core i3 laptop. However I've also got an old HP Proliant ML110 G6 with a few drives in it waiting to go into service as ZFS based storage server and I also recently bought a Lenovo M72e "Tiny" with a Core i5 and upgraded it to have 16GB RAM and an SSD.
 
 [![Lenovo M72e Tiny](/assets/thumbs/homecloudpart1-m72e.webp)](/assets/homecloudpart1-m72e.webp)
 
