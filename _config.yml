@@ -5,6 +5,7 @@ header-img: assets/wires-3702104-darker.webp
 description: "A random collection of thoughts, information and revelations which I saw fit to share with the world."
 keyword: "cablespaghetti, @cablespaghetti, kubernetes, linux, open source, cloud native, devops, k3s, bash"
 url: "https://cablespaghetti.dev"        # your host, for absolute URL
+image: assets/wires-3702104_1280.jpg
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 safe: true
 

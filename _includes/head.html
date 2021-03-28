@@ -29,8 +29,8 @@
     <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
     <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
     {% endcase %}
-    <meta property="og:image" content="https://cablespaghetti.dev/assets/wires-3702104_1280.jpg" />
-    <meta name="twitter:image" content="https://cablespaghetti.dev/assets/wires-3702104_1280.jpg" />
+    <meta property="og:image" content="{{ site.url }}/{% if page.image %}{{ page.image }}{% else %}{{ site.image }}{% endif %}" />
+    <meta name="twitter:image" content="{{ site.url }}/{% if page.image %}{{ page.image }}{% else %}{{ site.image }}{% endif %}" />
     <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
     <meta property="og:site_name" content="{{ site.SEOTitle }}" />
     <meta name="twitter:card" content="summary_large_image" />

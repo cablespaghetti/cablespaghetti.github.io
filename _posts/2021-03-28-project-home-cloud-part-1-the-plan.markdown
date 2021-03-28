@@ -1,9 +1,10 @@
 ---
 layout: post
 title:  "Project Home Cloud Part 1: The Plan"
-description: ""
+description: "The story of my love affair with old crusty hardware and the beginnings of my plan to turn my shed into my own personal cloud provider."
 date:   2021-03-28 12:00
 tags: linux networking hardware kubernetes life
+image: assets/thumbs/homecloudpart1-shed1.webp
 ---
 
 ## History
@@ -36,9 +37,9 @@ Needless to say my wife isn't keen on permanently running a Cat6 cable through t
 
 ## Routers
 
-Now I've got decent connectivity to my mediocre k3s cluster in the shed office, I'm in a position to start thinking of a practical purpose (or exuse) for all this infrastrucutre. I've been paying AWS a few $ a month to host a few Wordpress sites for friends and family, so the most obvious use is to move those in-house (well...in-shed). However Wordpress being what it is, I don't really want a hacker to find themselves on my home network if they compromised one of these sites. This means it's unfortunately time to say goodbye to my (surprisingly good) ISP provided Wi-fi router and start looking at more capable alternatives which will allow me to have a separate DMZ (demilitarised zone) for my web-facing infrastructure.
+Now I've got decent connectivity to my mediocre k3s cluster in the shed office, I'm in a position to start thinking of a practical purpose (or exuse) for all this infrastructure. I've been paying AWS a few $ a month to host a few Wordpress sites for friends and family, so the most obvious use is to move those in-house (well...in-shed). However Wordpress being what it is, I don't really want a hacker to find themselves on my home network if they compromised one of these sites. This means it's unfortunately time to say goodbye to my (surprisingly good) ISP provided Wi-fi router and start looking at more capable alternatives which will allow me to have a separate DMZ (demilitarised zone) for my web-facing infrastructure.
 
-Based on previous experiences I started looking at hardware on which I could run PfSense or its fork OpnSense. However anything vaguely capable with the three NICs I need would either be well over £100 or be a big power hungry x86 machine. I then went down a rabbit hole looking alteratives like OpenWrt and various ARM boards including a few based on the Raspberry Pi 4 compute module which I could stick just run Linux on. However I couldn't find anything cheap enough which had three NICs without resorting to USB adapters.
+Based on previous experiences I started looking at hardware on which I could run PfSense or its fork OpnSense. However anything vaguely capable with the three NICs I need would either be well over £100 or be a big power hungry x86 machine. I then went down a rabbit hole looking alternatives like OpenWrt and various ARM boards including a few based on the Raspberry Pi 4 compute module which I could stick just run Linux on. However I couldn't find anything cheap enough which had three NICs without resorting to USB adapters.
 
 This was when I happened upon a relatively obscure brand called MikroTik. They compete with the likes of FortiGate and Ubiquiti in the enterprise market, but then ship the same software on their consumer level hardware. The model I ended up deciding on is the [hAP ac²](https://mikrotik.com/product/hap_ac2) which is a tiny little (roughly Raspberry Pi sized) router with dual band 802.11ac for around £50. It seems to have the performance to deal with the 150Mb line I'm getting installed and all the features under the sun! Think VLANs, VPN support (including Wireguard), multiple Wi-Fi SSIDs, BGP...just everything! As a bonus, the inbuilt Wi-Fi should be good enough to cover my whole house so I don't have to worry about additional access points.
 
@@ -48,7 +49,7 @@ This was when I happened upon a relatively obscure brand called MikroTik. They c
 
 The plan is to set this up when my new Internet connection gets installed (I don't have a separate VDSL modem to use it with my existing line), with a VLAN trunk for the two networks (DMZ and LAN) going down the single cable to my shed office. I'll then need to get a managed switched for the shed to split that out for my laptop/internal stuff and the public-facing Kubernetes cluster.
 
-I'm then looking at PXE network booting my k3s nodes and running them on Flatcar Linux for a more "cattle not pets" approach, with a the HP Proliant server with lots of drives providing persisent storage on top of ZFS. I hope to set this all up using Ansible or similar so it's reproducible and I can stick it all up on GitHub for others to copy.
+I'm then looking at PXE network booting my k3s nodes and running them on Flatcar Linux for a more "cattle not pets" approach, with the HP Proliant ML110 server with lots of drives providing persistent storage on top of ZFS. I hope to set this all up using Ansible or similar so it's reproducible and I can stick it all up on GitHub for others to copy.
 
 Watch this space for more posts over the next few weeks as I hopefully make some progress!
 
