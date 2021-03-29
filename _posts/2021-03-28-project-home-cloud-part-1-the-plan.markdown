@@ -32,9 +32,6 @@ Needless to say my wife wasn't keen on permanently running a Cat6 cable through 
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Operation gigabit to the shed is finally a success! Don’t judge me!<br><br>I need to get some proper RJ45 sockets rather than the coupler but for now it seems to be functional! <a href="https://t.co/lloh8Q7lCl">pic.twitter.com/lloh8Q7lCl</a></p>&mdash; Sam Weston (@cablespaghetti) <a href="https://twitter.com/cablespaghetti/status/1375937556588728320?ref_src=twsrc%5Etfw">March 27, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
-[![Bodgy cabling](/assets/thumbs/homecloudpart1-cabling1.webp)](/assets/homecloudpart1-cabling1.webp)
-[![More bodgy cabling](/assets/thumbs/homecloudpart1-cabling2.webp)](/assets/homecloudpart1-cabling2.webp)
-
 ## Routers
 
 Now I've got decent connectivity to my mediocre k3s cluster in the shed office, I'm in a position to start thinking of a practical purpose (or exuse) for all this infrastructure. I've been paying AWS a few dollars a month to host a some Wordpress sites for friends and family, so the most obvious use is to move those in-house (well...in-shed). However Wordpress being what it is, I don't really want a hacker to find themselves on my home network if they compromised one of these sites. This means it's unfortunately time to say goodbye to my (surprisingly good) ISP provided Wi-Fi router and start looking at more capable alternatives, which will allow me to have a separate DMZ (demilitarised zone) for my web-facing infrastructure.
