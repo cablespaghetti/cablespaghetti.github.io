@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Project Home Cloud Part 3: MikroTik hAP ac² Initial Configuration"
-description: "Setting up MikroTik hAP ac² with the basic functionality to replace my ISP provided router."
-date: 2021-04-04 12:00
+title:  "Project Home Cloud Part 3: MikroTik hAP ac² Initial Configuration with IPv6"
+description: "Setting up MikroTik hAP ac² with the basic functionality to replace my ISP provided router including working IPv6."
+date: 2021-04-05 09:30
 tags: networking hardware mikrotik life
 image: assets/thumbs/homecloudpart1-mikrotik.webp
 ---
