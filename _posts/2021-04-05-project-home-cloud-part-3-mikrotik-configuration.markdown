@@ -56,15 +56,13 @@ I might be making life hard for myself by not learning the MikroTik CLI but conf
 
 ## MTU tweaking for maximum performance
 
-I'm not sure how this differs between different ISPs in the UK, let alone other countries but where PPPoE is used there are potentially problems with the [MTU (Maximum transmission unit)](https://en.wikipedia.org/wiki/Maximum_transmission_unit) configured. 
+Where PPPoE is used there are potentially problems with the [MTU (Maximum transmission unit)](https://en.wikipedia.org/wiki/Maximum_transmission_unit) used for Ethernet frames encapsulated within the PPP tunnel. This is because the standard MTU for Ethernet is 1500 bytes, but PPPoE needs 8 bytes to store its own headers. This means that without your Internet connection being configured for a higher than standard MTU, then frames of 1500 bytes can't actually be transmitted over the PPP tunnel, causing fragmentation or complete failure for some services like Netflix. This higher than standard MTU is called [RFC4638](https://tools.ietf.org/html/rfc4638) or "Jumbo Frames".
 
-The issue as I understand it, is that the default MTU for pretty much everything which uses Ethernet is 1500 bytes, but PPPoE needs 8 bytes of the frame. This means that without your Internet connection being configured for a higher than standard MTU, then frames of 1500 bytes can't actually be transmitted over the connection, causing potential problems.
+BT and many other UK ISPs seem to support RFC4638 with an MTU of 1520, and I assume the ISP provided routers are configured for this. However many 3rd party routers like the MikroTik don't come configured for this by default, so we need to make a few tweaks to our configuration.
 
-BT and many other UK ISPs seem to support 1508 byte frames to get around this issue, and I assume the ISP provided routers are configured for this. However 3rd party routers like the MikroTik come configured for a 1492 or 1480 MTU by default, causing slight performance reduction and strange issues with services like Netflix.
+Andrews & Arnold [have a section about this on their wiki](https://support.aa.net.uk/Router_-_RouterOS_and_Routerboard#1500_MTU_over_PPPoE_using_baby_jumbo_frames), but the information seems to be out of date for the latest MikroTik firmware. Thanks to [Daryll Swer](https://www.daryllswer.com/) for linking to [this MikroTik forum thread](https://forum.mikrotik.com/viewtopic.php?f=2&t=171390#p838707) and generally providing guidance on this. He's got some interesting MikroTik related posts on his blog if you're interested.
 
-All credit to Andrews & Arnold for [their excellent documentation](https://support.aa.net.uk/Router_-_RouterOS_and_Routerboard#1500_MTU_over_PPPoE_using_baby_jumbo_frames) on this, which I've based a lot of this configuration on.
-
-True to form I've configured this all this in Webfig in the Interfaces section under `pppoe-out1` for the virtual PPPoE interface and `ether1` for the actual physical port.
+True to form I've configured this all this in Webfig in the Interfaces section under `pppoe-out1` for the virtual PPPoE interface and `ether1` for the actual physical port. Leaving the MTU and MRU on the PPPoE interface unset should allow it to auto-negotiate with your ISP's equipment for the best MTU/MRU they support; read the linked thread for more information on that one.
 
 [![pppoe-out1 configuration](/assets/thumbs/homecloudpart3-pppoe1.webp)](/assets/homecloudpart3-pppoe1.webp)
 [![ether1 configuration](/assets/thumbs/homecloudpart3-pppoe2.webp)](/assets/homecloudpart3-pppoe2.webp)
