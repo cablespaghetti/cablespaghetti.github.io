@@ -37,9 +37,9 @@ Security now taken care of I went digging into the features available to me. Hav
 
 Here's the 5GHz band frequency usage in my house. As you can see it gives you the actual frequencies in MHz rather than the channel number as you might be used to, but this lines up with the radio configuration so I suppose it makes sense. Ideally you want four consecutive quiet channels; I picked 5500MHz as my starting channel.
 
-It's worth noting at this point that not all channels are created equal, at least not in the UK. The rules seem to change fairly frequently but most channels in the 5GHz range are ["DFS" channels](https://en.wikipedia.org/wiki/Dynamic_frequency_selection). These frequencies are usually the most quiet but the downside is that there will be a delay (usually 60 seconds but sometimes up to 10 minutes) while your access point scans for radar already using that frequency in your area, before it starts broadcasting itself. I've also found that my Amazon Fire TV stick only seems to support non-DFS channels, but for now I'll just live with that using 2.4GHz. You'll have to decide whether the trade offs are worth it for you.
-
 [![Freq Usage](/assets/thumbs/homecloudpart3-wifi2.webp)](/assets/homecloudpart3-wifi2.webp)
+
+It's worth noting at this point that not all channels are created equal, at least not in the UK. The rules seem to change fairly frequently but most channels in the 5GHz range are ["DFS" channels](https://en.wikipedia.org/wiki/Dynamic_frequency_selection). These frequencies are usually the most quiet but the downside is that there will be a delay (usually 60 seconds but sometimes up to 10 minutes) while your access point scans for radar already using that frequency in your area, before it starts broadcasting itself. I've also found that my Amazon Fire TV stick only seems to support non-DFS channels, but for now I'll just live with that using 2.4GHz. You'll have to decide whether the trade offs are worth it for you.
 
 Here is the part of my 5GHz radio configuration which I've changed from the default (MAC removed for security or something, SSID removed for embarrassment): 
 
@@ -62,10 +62,9 @@ The issue as I understand it, is that the default MTU for pretty much everything
 
 BT and many other UK ISPs seem to support 1508 byte frames to get around this issue, and I assume the ISP provided routers are configured for this. However 3rd party routers like the MikroTik come configured for a 1492 or 1480 MTU by default, causing slight performance reduction and strange issues with services like Netflix.
 
-All credit to Andrews & Arnold for [their excellent documentation](https://support.aa.net.uk/Router_-_RouterOS_and_Routerboard#1500_MTU_over_PPPoE_using_baby_jumbo_frames) on this, which I've lifted a lot of this from.
+All credit to Andrews & Arnold for [their excellent documentation](https://support.aa.net.uk/Router_-_RouterOS_and_Routerboard#1500_MTU_over_PPPoE_using_baby_jumbo_frames) on this, which I've based a lot of this configuration on.
 
 True to form I've configured this all this in Webfig in the Interfaces section under `pppoe-out1` for the virtual PPPoE interface and `ether1` for the actual physical port.
-
 
 [![pppoe-out1 configuration](/assets/thumbs/homecloudpart3-pppoe1.webp)](/assets/homecloudpart3-pppoe1.webp)
 [![ether1 configuration](/assets/thumbs/homecloudpart3-pppoe2.webp)](/assets/homecloudpart3-pppoe2.webp)
