@@ -97,8 +97,19 @@ ipv6 firewall filter add chain=forward action=drop log=yes log-prefix="" comment
 
 Now you should in theory be secure, you can enable the DHCP client on the PPPoE interface for IPv6. This is under `IPv6 -> DHCP Client` in Webfig. The prefix hint was left blank initially and then filled in after I got the prefix from my ISP the first time around; this should *encourage* them to give me the same prefix next time around, although it looks like I've been given this `/56` prefix for 10 years!
 
+You'll notice here that I didn't select "Add Default Route"; this seems to be set up automatically and this box just added a duplicate route I didn't need.
+
 [![DHCP Client Configuration](/assets/thumbs/homecloudpart3-ipv61.webp)](/assets/homecloudpart3-ipv61.webp)
 
-ND
-Pool to interface
+Then under `IPv6 -> Addresses` you can set up your LAN "bridge" interface to use this pool of addresses. Here the "Address" field will be `::/64` when adding the configuration; it is then filled in automatically when you save:
+
+[![Assign IPv6 addresses to LAN](/assets/thumbs/homecloudpart3-ipv63.webp)](/assets/homecloudpart3-ipv63.webp)
+
+Then you must set up Neighbour Discovery or devices on your LAN won't get assigned addresses, this is under `IPv6 -> ND`:
+
+[![Set up neighbour discovery](/assets/thumbs/homecloudpart3-ipv62.webp)](/assets/homecloudpart3-ipv62.webp)
+
+And that should hopefully be it! I've continued to use my separate DNS server for IPv6 clients running on dnsmasq, which seems to respond with IPv6 addresses by default anyway, even if it is operating over IPv4 at the moment.
+
+I've purchased a TP-Link [TL-SG105E](https://www.tp-link.com/uk/business-networking/easy-smart-switch/tl-sg105e/) managed switch for next to nothing off eBay which should be delivered some time this week. When that arrives I'll configure a VLAN "trunk" to my office/shed from the MikroTik so I can start separating off my web-facing homelab from the rest of my network over the single Cat6 cable I have.
 
