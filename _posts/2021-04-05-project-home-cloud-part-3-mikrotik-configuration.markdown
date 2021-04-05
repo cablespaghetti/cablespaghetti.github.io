@@ -19,7 +19,7 @@ For our purposes the "WISP AP" mode (selected in the top right corner) is the on
 
 Unfortunately when I filled all this in, I hit a bug which made Webfig unavailable. [Other people seem to have hit it previously](https://forum.mikrotik.com/viewtopic.php?t=147568) but there didn't seem to be any misconfigured firewall rules in my case. In the end I logged in via SSH and ran `system reset-configuration` to take it back to factory defaults again. The next time around I didn't hit the problem and I'm not quite sure what I did differently.
 
-When using Quick Set I just filled in the basic details for PPPoE and changed the LAN settings to match my existing router, disabling DHCP as I already have a Raspberry Pi with dnsmasq doing that job. Having the IP the same as my existing router means I don't have to reconfigure my DHCP server and go round my house renewing DHCP leases.
+When using Quick Set I just filled in the basic details for PPPoE and changed the LAN settings to match my existing router **leaving Wi-Fi settings at the defaults for th moment**. I disabled DHCP as I already have a Raspberry Pi with dnsmasq doing that job. Having the IP the same as my existing router means I don't have to reconfigure my DHCP server and go round my house renewing DHCP leases.
 
 ## Wi-Fi Configuration
 
@@ -110,6 +110,8 @@ Then you must set up Neighbour Discovery or devices on your LAN won't get assign
 [![Set up neighbour discovery](/assets/thumbs/homecloudpart3-ipv62.webp)](/assets/homecloudpart3-ipv62.webp)
 
 And that should hopefully be it! I've continued to use my separate DNS server for IPv6 clients running on dnsmasq, which seems to respond with IPv6 addresses by default anyway, even if it is operating over IPv4 at the moment.
+
+## The next post
 
 I've purchased a TP-Link [TL-SG105E](https://www.tp-link.com/uk/business-networking/easy-smart-switch/tl-sg105e/) managed switch for next to nothing off eBay which should be delivered some time this week. When that arrives I'll configure a VLAN "trunk" to my office/shed from the MikroTik so I can start separating off my web-facing homelab from the rest of my network over the single Cat6 cable I have.
 
