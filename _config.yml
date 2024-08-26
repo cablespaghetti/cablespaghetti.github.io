@@ -15,7 +15,7 @@ future: true
 # SNS settings
 RSS: true
 github_username:    cablespaghetti
-twitter_username:   cablespaghetti
+mastodon_username:   https://southampton.social/@cablespaghetti
 linkedin_username:  sam-weston-66100334
 
 
